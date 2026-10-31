@@ -1,0 +1,11 @@
+# Données sensibles / lourdes : ne pas versionner
+data/*.sav
+data/*.csv
+!data/README.md
+outputs/*
+!outputs/.gitkeep
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+.env
