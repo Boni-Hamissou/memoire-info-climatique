@@ -1,12 +1,5 @@
 # Données
 
-Placez ici le fichier SPSS : `Base Producteurs IDID 2013 V3.sav` (non versionné, voir `.gitignore`).
+Les données utilisées sont des données issues de l'enquête quantitative réalisée en 2013 dans le cadre du Projet de Renforcement des connaissances Économiques et de Capacité d'Adaptation aux Changements Climatiques au Bénin (PRECAB), mis en œuvre par l'ONG Initiatives pour un Développement Intégré Durable (IDID) avec le soutien financier du Centre de Recherches pour le Développement International (CRDI). Les données ont été collectées à l'aide d'un questionnaire structuré administré en face-à-face aux chefs de ménage producteurs agricoles.
 
-Vous pouvez aussi indiquer un autre emplacement :
-
-```bash
-export MEMOIRE_SAV="/chemin/vers/Base Producteurs IDID 2013 V3.sav"   # Linux / macOS
-set MEMOIRE_SAV=F:\chemin\Base Producteurs IDID 2013 V3.sav            # Windows
-```
-
-> Ne publiez pas la base sur GitHub sans vérifier les droits de diffusion (enquête IDID 2013, données individuelles de producteurs) et l'anonymisation.
+La base (fichier SPSS `.sav`) n'est pas diffusée avec ce dépôt.
