@@ -1,7 +1,26 @@
 # Utilisation de l'information climatique par les producteurs agricoles
 
-Code d'analyse du mémoire : statistiques descriptives, tests bivariés (χ², t de Welch) et régression logistique
-de l'utilisation de l'information climatique (base producteurs IDID 2013, N = 360).
+Code d'analyse du mémoire : statistiques descriptives, tests bivariés (χ², t de Welch) et régression
+logistique de l'utilisation de l'information climatique par les producteurs agricoles
+(base producteurs IDID 2013, N = 360).
+
+## Problématique et données
+
+L'analyse étudie les facteurs associés à l'utilisation de l'information climatique : accès aux sources
+d'information (10 sources, formelles, informelles et médias), réalisme perçu, fréquence de réception et
+caractéristiques socio-économiques des producteurs.
+
+Les données (fichier SPSS `.sav`) ne sont pas versionnées. Placez le fichier dans `data/`
+(voir `data/README.md`) ou indiquez son chemin (voir ci-dessous).
+
+## Méthodes
+
+- Statistiques descriptives : accès par source et par catégorie, caractéristiques de l'échantillon
+- Tests bivariés : χ² (variables qualitatives) et t de Welch (variables quantitatives)
+- Multicolinéarité : facteur d'inflation de la variance (VIF)
+- Régression logistique de l'utilisation, avec détection des observations influentes (résidus studentisés,
+  levier, distance de Cook, DFBETAS) et ré-estimation sans ces observations
+- Odds ratios, matrice de confusion et AUC
 
 ## Structure
 
@@ -12,35 +31,27 @@ de l'utilisation de l'information climatique (base producteurs IDID 2013, N = 36
 │   ├── preprocessing.py    # chargement .sav + variables dérivées
 │   ├── descriptive.py      # Tableaux 2 et 3, Figure 2
 │   └── modeling.py         # VIF, logit, observations influentes, odds ratios
-├── notebooks/Memoire2.ipynb        # notebook d'origine (inchangé)
-├── extraction/
-│   ├── memoire_code_complet.py     # extraction intégrale des 17 cellules, sans modification
-│   └── ORDRE_EXECUTION.md          # ordre d'exécution réel dans Jupyter
 ├── data/                   # y placer le .sav (non versionné)
 └── outputs/                # tableaux CSV et figure générés
 ```
 
-## Utilisation
+## Reproduction
 
 ```bash
 pip install -r requirements.txt
-python run_all.py            # ou : python run_all.py "chemin/vers/base.sav"
+python run_all.py                      # base dans data/
+python run_all.py "chemin/vers/base.sav"
 ```
 
-## Correspondance notebook → modules
+Le chemin de la base peut aussi être fourni par la variable d'environnement `MEMOIRE_SAV`.
+Les tableaux et la figure sont écrits dans `outputs/`.
 
-| Notebook (cellule) | Module |
-|---|---|
-| 0, 1, 7 | `preprocessing.construire_variables` |
-| 2, 6, 8 | `descriptive.tableau2_*`, `figure2_acces` |
-| 3, 4, 9, 10, 11 | `descriptive.tableau3_quali`, `tableau3_quanti` |
-| 12 | `modeling.calcul_vif` |
-| 13, 14, 15 | `modeling.ajuster_logit`, `observations_influentes`, `performance` |
-| 5 | `modeling.tableau_odds_ratios` |
+## Notes méthodologiques
 
-## Remarques de reproductibilité
-
-- La cellule 2 du notebook additionne les N par source pour les catégories (Médias 88,9 %, Formel 78,6 %) :
-  c'est un cumul qui compte plusieurs fois les mêmes producteurs. La cellule 6 le corrige par une union
-  (Médias 57,2 %, Formel 46,1 %) ; seule cette version est reprise dans `src/`.
-- Les cellules du notebook ont été exécutées dans le désordre (voir `extraction/ORDRE_EXECUTION.md`).
+- Les catégories de sources (formelles, médias, informelles) sont comptées en union : un producteur
+  est compté une seule fois par catégorie, quel que soit le nombre de sources auxquelles il a accès.
+- Les questions sur l'utilisation, le réalisme perçu et la fréquence de réception ne sont posées qu'aux
+  producteurs ayant accès à la source. Les valeurs manquantes correspondantes sont codées 0 (utilisation,
+  réalisme), et la fréquence manquante est remplacée par la médiane.
+- L'accessibilité est présentée dans les analyses descriptives mais exclue du modèle logit, en raison de
+  la quasi-séparation (aucun producteur sans accès n'utilise l'information).
